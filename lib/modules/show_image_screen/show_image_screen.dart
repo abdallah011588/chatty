@@ -9,32 +9,35 @@ class showImageScreen extends StatelessWidget {
 
 
   final File image;
-  showImageScreen({required this.image}) ;
+  const showImageScreen({required this.image}) ;
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<appCubit,appStates>(
       listener: (context, state) {
-        if(state is appUploadImSuccessState)
+        if(state is appUploadImSuccessState) {
           Navigator.pop(context);
+        }
       },
       builder:  (context, state) {
         return Scaffold(
           appBar: AppBar(
             actions: [
-              if(state is! appUploadImLoadingState)
+            state is! appUploadImLoadingState?
               IconButton(
                 onPressed: (){
                   appCubit.get(context).updateImage();
                 },
-                icon: Icon(Icons.check),
-              ),
+                icon:const Icon(Icons.check),
+              )
+              :Center(child: CircularProgressIndicator(color: Colors.grey[200],),
+            ),
             ],
           ),
           backgroundColor: Colors.black,
           body: SizedBox.expand(
             child: InteractiveViewer(
-              child: Image(image: FileImage(image),),//Image.file(imageUri),
+              child: Image(image: FileImage(image),),
             ),
           ),
         );

@@ -11,6 +11,15 @@ class showMessageImgScreen extends StatelessWidget{
   {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: (){
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: SizedBox.expand(
         child: InteractiveViewer(
           child: Image(image: NetworkImage(imgUrl)),
