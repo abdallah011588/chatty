@@ -1,6 +1,7 @@
 import 'package:chat/layout/chat.dart';
 import 'package:chat/layout/cubit/cubit.dart';
 import 'package:chat/layout/cubit/states.dart';
+import 'package:chat/localization/localization_methods.dart';
 import 'package:chat/models/user_model.dart';
 import 'package:chat/modules/messages_screen/messages_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,43 +13,50 @@ class friendsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<appCubit,appStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-
+    return Builder(
+      builder:(context) {
         appCubit.get(context).getFriends();
-       // appCubit.get(context).getAllFriends();
-
-        return Scaffold(
-          appBar: AppBar(
-            title:Text('Friends') ,
-          ),
-         body:
-         appCubit.get(context).usersFriends.length>0?
-         Column(
-         children: [
-                Expanded(
-                child: ListView.separated(
-                  itemBuilder: (context, index) => chatsItemBuilder(context, appCubit.get(context).usersFriends[index]),
-                  separatorBuilder:(context ,index)=>Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 85.0),
-                    child: Container(
-                      height: 1,
-                      width: double.infinity,
-                      color:appCubit.get(context).isdark? Colors.black: Colors.grey[300],
+        return BlocConsumer<appCubit,appStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Scaffold(
+           appBar: AppBar(
+              title: Text(getTranslated(context, 'Friends')!,) ,
+            ),
+           body: appCubit.get(context).friends.length>0?
+           Column(
+           children: [
+               Expanded(
+                   child: ListView.separated(
+                    itemBuilder: (context, index) => chatsItemBuilder(context, appCubit.get(context).friends[index]),
+                    separatorBuilder:(context ,index)=>Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 85.0),
+                      child: Container(
+                        height: 1,
+                        width: double.infinity,
+                        color:appCubit.get(context).isdark? Colors.black: Colors.grey[300],
+                      ),
                     ),
+                    itemCount:appCubit.get(context).friends.length,
+                    physics: BouncingScrollPhysics(),
                   ),
-                  itemCount:appCubit.get(context).usersFriends.length,
-                  physics: BouncingScrollPhysics(),
-                ),),
-         ],
-         ):Center(child: Column(
-             mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-               Text('There is no Friends',style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),),
-             ],
-           ),),
-        );
+                ),
+           ],
+           )
+           :Center(
+             child: Column(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                  Text(
+                    getTranslated(context, 'No_Friends')!,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+               ],
+             ),
+           ),
+          );
+        },
+      );
       },
     );
   }
@@ -133,15 +141,17 @@ Widget chatsItemBuilder(context,userModel model)=>InkWell(
   onTap: (){
     Navigator.push(context, MaterialPageRoute(builder: (context) => messagesScreen(usermodel: model),));
   },
-  child:   Padding(
+  child:Padding(
     padding: const EdgeInsets.all(10.0),
-    child:   Row(
+    child:Row(
       children: [
         CircleAvatar(
           radius: 35.0,
           backgroundImage:  NetworkImage('${model.image}'),//NetworkImage('https://img.freepik.com/free-photo/hacker-with-mask_103577-1.jpg?size=626&ext=jpg&ga=GA1.2.1571019282.1647278978'),
         ),
-        SizedBox(width: 10.0,),
+        const SizedBox(
+          width: 10.0,
+        ),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,8 +169,12 @@ Widget chatsItemBuilder(context,userModel model)=>InkWell(
                   ),
                 ],
               ),
-              SizedBox(height: 10.0,),
-              Text('${model.bio}',style: Theme.of(context).textTheme.headline2,//TextStyle(color: Colors.grey[600]),
+              const SizedBox(
+                height: 10.0,
+              ),
+              Text(
+                '${model.bio}',
+                style: Theme.of(context).textTheme.headline2,
               ),
             ],
           ),

@@ -15,6 +15,16 @@ ThemeData lightTheme=ThemeData(
   ),
 
   textTheme: TextTheme(
+    bodyText1: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 20.0,
+        color: Colors.black
+    ),
+    subtitle1: TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 16.0,
+      color: Colors.black,
+    ),
     subtitle2: TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: 14.0,
@@ -42,6 +52,10 @@ ThemeData lightTheme=ThemeData(
       fontWeight: FontWeight.bold,
     ),
 
+
+  ),
+  iconTheme: IconThemeData(
+    color: Colors.black,
 
   ),
 
@@ -123,6 +137,10 @@ ThemeData darktheme=ThemeData(
 
   ),
 
+  iconTheme: IconThemeData(
+    color: Colors.white70,
+
+  ),
   drawerTheme: DrawerThemeData(
     backgroundColor:  HexColor('1B242F'),
    // scrimColor: Colors.red,

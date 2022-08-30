@@ -8,6 +8,7 @@ class userModel
   late String uId;
   late String bio;
   late String image;
+  late String messagingToken;
   //late bool myFriend;
 
 
@@ -18,6 +19,7 @@ class userModel
     required this.uId,
     required this.bio,
     required this.image,
+    required this.messagingToken,
    // required this.myFriend,
 
   });
@@ -31,6 +33,7 @@ class userModel
     uId=json['uId'];
     bio=json['bio'];
     image=json['image'];
+    messagingToken=json['messagingToken'];
   //  myFriend=json['myFriend'];
 
   }
@@ -45,6 +48,7 @@ class userModel
       'uId':uId,
       'bio':bio,
       'image':image,
+      'messagingToken':messagingToken,
      // 'myFriend':myFriend,
 
     };

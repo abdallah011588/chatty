@@ -7,7 +7,7 @@ class cache{
   static late  SharedPreferences  prefs;
 
   static init()async{
-    prefs=await SharedPreferences.getInstance();
+    prefs= await SharedPreferences.getInstance();
   }
 
 

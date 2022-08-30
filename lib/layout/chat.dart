@@ -1,22 +1,24 @@
 
+import 'package:badges/badges.dart';
 import 'package:chat/layout/cubit/cubit.dart';
 import 'package:chat/layout/cubit/states.dart';
 import 'package:chat/models/user_model.dart';
 import 'package:chat/modules/friend_requests_screen/friend_requests_screen.dart';
 import 'package:chat/modules/friends_screen/friends_screen.dart';
+import 'package:chat/modules/message_voice.dart';
 import 'package:chat/modules/messages_screen/messages_screen.dart';
-import 'package:chat/modules/newchat_screen/newchat_screen.dart';
 import 'package:chat/modules/search_screen/search_screen.dart';
 import 'package:chat/modules/setting_screen/setting_screen.dart';
 import 'package:chat/modules/show_message_img_screen/show_message_img_screen.dart';
-import 'package:chat/shared/local/cache.dart';
+import 'package:chat/shared/constant/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:intl/intl.dart';
+
+import '../localization/localization_methods.dart';
 
 class chatLayout extends StatelessWidget {
-  //const chatLayout({Key? key}) : super(key: key);
+  chatLayout({Key? key}) : super(key: key);
   var  scaffoldKey=GlobalKey<ScaffoldState>();
 
   @override
@@ -25,142 +27,182 @@ class chatLayout extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
 
-        appCubit.get(context).getFriends();
-
-        var model=null;
-         model=appCubit.get(context).user_model;
-
+        if(appCubit.get(context).user_model !=null) {
+          //appCubit.get(context).getFriends();
+        }
+        var model=appCubit.get(context).user_model;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
-            //backgroundColor: Colors.teal,
-            leading: IconButton(
-              onPressed: ()
-              {
-                scaffoldKey.currentState!.openDrawer();
-               // appCubit.get(context).getRequests();
-              },
-              icon:Icon(Icons.menu),
+            // leading: IconButton(
+            //   onPressed: ()
+            //   {
+            //     scaffoldKey.currentState!.openDrawer();
+            //    // appCubit.get(context).getRequests();
+            //   },
+            //   icon:const Icon(Icons.menu),
+            // ),
+            title: Text(
+              getTranslated(context, 'Chatty')!,
+              style:TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 23.0,
+                color: Colors.white,
+                fontFamily: 'Galada'
             ),
-            title: Text('Chat',style:TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-                color: Colors.white
-            )),
+            ),
             actions: [
               IconButton(
                 onPressed: ()
                 {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => searchScreen(),));
+                 // appCubit.get(context).getSpecificUser();
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) => searchScreen(),));
+                  showSearch(
+                    context: context,
+                    delegate: searchDelegate(list: appCubit.get(context).friends),
+                  );
                 },
-                icon: Icon(Icons.search),
+                icon:const Icon(Icons.search),
               ),
             ],
           ),
           drawer: Drawer(
-            child: ListView(
+            child:appCubit.get(context).user_model !=null?
+            ListView(
               padding: EdgeInsets.zero,
               children: [
                 DrawerHeader(
                   decoration: BoxDecoration(
-                    color:appCubit.get(context).isdark? HexColor('23303F') :Colors.teal,
+                    color:appCubit.get(context).isdark? HexColor('23303F') : Colors.teal,
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          InkWell(
-                            child: CircleAvatar(
-                              radius: 40.0,
-                            backgroundImage: NetworkImage('${model.image}'),
-                            //  backgroundImage: NetworkImage('https://img.freepik.com/free-photo/hacker-with-mask_103577-1.jpg?size=626&ext=jpg&ga=GA1.2.1571019282.1647278978'),
-                            ),
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) =>showMessageImgScreen(imgUrl: '${model.image}'),));
-                            },
-                          ),
-                          Spacer(),
-                          IconButton(
-                              onPressed: (){
-                               appCubit.get(context).changeAppMode();
-                              },
-                              icon: Icon(
-                                Icons.brightness_4_outlined,
-                                color: appCubit.get(context).isdark? Colors.white:Colors.black,
-                              ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
                       Expanded(
-                        child: Text(
-                          '${model.name}',
-                          style:TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16.0),
-                          maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              child: CircleAvatar(
+                                radius: 40.0,
+                                backgroundImage: NetworkImage(model!.image),
+                              ),
+                              onTap: (){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) =>showMessageImgScreen(imgUrl: model.image),),
+                                );
+                              },
+                            ),
+                          //  Spacer(),
+                            IconButton(
+                                onPressed: (){
+                                 appCubit.get(context).changeAppMode();
+                                },
+                                icon: Icon(
+                                  Icons.brightness_4_outlined,
+                                  color: appCubit.get(context).isdark? Colors.white:Colors.black,
+                                ),
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 5.0,),
-                      Text('${model.phone}',style: TextStyle(color: Colors.white,fontSize: 14.0),
+                      //Spacer(),
+                      Text(
+                        model.name,
+                        style:const TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16.0),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 5.0,),
+                      Text(
+                        model.phone,
+                        style:const TextStyle(color: Colors.white,fontSize: 14.0),
                       ),
                     ],
                   ),
                 ),
                 ListTile(
-                  leading: Icon(Icons.group),
-                  title:  Text('Friends',style: Theme.of(context).textTheme.headline3,),
+                  leading:const Icon(Icons.group),
+                  title: Text(
+                    getTranslated(context, 'Friends')!,
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
                   onTap: () {
                    // appCubit.get(context).getFriends();
                     //appCubit.get(context).getAllFriends();
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => friendsScreen(),));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>const friendsScreen(),),
+                    );
                   },
                   iconColor: Colors.teal,
                 ),
                 ListTile(
-                  leading: Icon(Icons.group_add),
-                  title:  Text('Friend requests' ,style: Theme.of(context).textTheme.headline3,),
+                  leading:marker >0? Badge(
+                    badgeContent: Text(marker.toString(),style: TextStyle(color: Colors.white),),
+                    child: Icon(Icons.group_add),
+                  )
+                      :const Icon(Icons.group_add),
+                  title:  Text(
+                    getTranslated(context, 'Friends requests')!,
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
                   onTap: () {
+                    marker=0;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>const friendRequestsScreen(),),
+                    );
+                  },
+                  iconColor: Colors.teal,
+                ),
+                ListTile(
+                  leading:const Icon(Icons.save_alt_sharp),
+                  title:  Text(
+                    getTranslated(context, 'Saved Messages')!,
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
+                  onTap: () {
+                   // appCubit.get(context).getVoiceRecorded();
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => voiceMessage(),));
+                  },
+                  iconColor: Colors.teal,
+                ),
+                ListTile(
+                  leading:const Icon(Icons.settings),
+                  title:  Text(
+                    getTranslated(context, 'Settings')!,
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => settingScreen(),),
+                    );
+                  },
+                  iconColor: Colors.teal,
+                ),
+                ListTile(
+                  leading:const Icon(Icons.info_outline),
+                  title:  Text(
+                    getTranslated(context, 'About')!,
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
+                  onTap: () {},
+                  iconColor: Colors.teal,
+                ),
 
-                    // appCubit.get(context).getRequests();
-                    // appCubit.get(context).getallRequests();
-                    // appCubit.get(context).usersRequests.forEach((element) {
-                    //   print(element.uId);
-                    // });
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => friendRequestsScreen(),));
-                  },
-                  iconColor: Colors.teal,
-                ),
-                ListTile(
-                  leading: Icon(Icons.save_alt_sharp),
-                  title:  Text('Saved Messages',style: Theme.of(context).textTheme.headline3,),
-                  onTap: () {
-                  },
-                  iconColor: Colors.teal,
-                ),
-                ListTile(
-                  leading: Icon(Icons.call),
-                  title:  Text('Calls',style: Theme.of(context).textTheme.headline3,),
-                  onTap: () {
-                  },
-                  iconColor: Colors.teal,
-                ),
-                ListTile(
-                  leading: Icon(Icons.settings),
-                  title:  Text('Settings',style: Theme.of(context).textTheme.headline3,),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => settingScreen(),));
-                  },
-                  iconColor: Colors.teal,
-                ),
               ],
-            ),
+            )
+            :Container(),
           ),
-          body: ListView.separated(
-            itemBuilder: (context, index) => chatsItemBuilder(context,appCubit.get(context).usersFriends[index]),
-            separatorBuilder:(context ,index)=>Padding(
+          body:appCubit.get(context).user_model !=null?
+          (appCubit.get(context).friends.length >0?
+          ListView.separated(
+            itemBuilder: (context, index) => chatsItemBuilder(context,appCubit.get(context).friends[index]),
+            separatorBuilder:(context ,index)=> Padding(
               padding: const EdgeInsetsDirectional.only(start: 80.0),
               child: Container(
                 height: 1,
@@ -168,15 +210,23 @@ class chatLayout extends StatelessWidget {
                 color: appCubit.get(context).isdark? Colors.black:Colors.grey[300],
               ),
             ),
-            itemCount: appCubit.get(context).usersFriends.length,
-            physics: BouncingScrollPhysics(),
-          ),
+            itemCount: appCubit.get(context).friends.length,
+            physics:const BouncingScrollPhysics(),
+          )
+          :Center(child: Text(
+              getTranslated(context, 'Add_friends')!,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),)
+          ) :const Center(child: CircularProgressIndicator()),
+
           floatingActionButton: FloatingActionButton(
             onPressed: ()
             {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => newChatScreen(),));
+             // Navigator.push(context, MaterialPageRoute(builder: (context) => newChatScreen(),));
+
+              showSearch(context: context, delegate: newFriendSearchFDelegate(list: appCubit.get(context).users));
             },
-            child: Icon(Icons.person_add_alt_1),
+            child:const Icon(Icons.person_add_alt_1),
             backgroundColor: Colors.teal,
           ),
         );
@@ -190,6 +240,7 @@ class chatLayout extends StatelessWidget {
 
 Widget chatsItemBuilder(context,userModel model)=>InkWell(
   onTap: (){
+    appCubit.get(context).getVoiceRecorded();
     Navigator.push(context, MaterialPageRoute(builder: (context) => messagesScreen(usermodel: model),));
       },
   child:   Padding(
@@ -198,9 +249,10 @@ Widget chatsItemBuilder(context,userModel model)=>InkWell(
       children: [
         CircleAvatar(
           radius: 30.0,
-          backgroundImage:  NetworkImage('${model.image}'),//NetworkImage('https://img.freepik.com/free-photo/hacker-with-mask_103577-1.jpg?size=626&ext=jpg&ga=GA1.2.1571019282.1647278978'),
+          backgroundImage:  NetworkImage(model.image),
+          //NetworkImage('https://img.freepik.com/free-photo/hacker-with-mask_103577-1.jpg?size=626&ext=jpg&ga=GA1.2.1571019282.1647278978'),
         ),
-        SizedBox(width: 10.0,),
+        const SizedBox(width: 10.0,),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,15 +261,14 @@ Widget chatsItemBuilder(context,userModel model)=>InkWell(
               Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      '${model.name}',
+                    child: Text( model.name,
                       style: Theme.of(context).textTheme.headline1,//TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                     ),
                   ),
                  // Spacer(),
-                  Text(
+                 /* Text(
 
                      // appCubit.get(context).getMessages(receiverId: );
                      appCubit.get(context).messages.length-1 >0?
@@ -226,17 +277,17 @@ Widget chatsItemBuilder(context,userModel model)=>InkWell(
                          : '',
                     //'12:15 AM',
                     style: Theme.of(context).textTheme.headline2,//TextStyle(color: Colors.grey[600]),
-                  ),
+                  ),*/
                 ],
               ),
-              SizedBox(height: 10.0,),
+             /* const  SizedBox(height: 10.0,),
               Text(
                 appCubit.get(context).messages.length-1 >0?
                 '${appCubit.get(context).messages[ appCubit.get(context).messages.length-1].text}'
                 :'',
                 //'Hello bro ,How are you ?',
                 style: Theme.of(context).textTheme.headline2,//TextStyle(color: Colors.grey[600]),
-              ),
+              ),*/
             ],
           ),
         ),

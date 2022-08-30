@@ -1,5 +1,6 @@
 import 'package:chat/layout/cubit/cubit.dart';
 import 'package:chat/layout/cubit/states.dart';
+import 'package:chat/localization/localization_methods.dart';
 import 'package:chat/models/request_model.dart';
 import 'package:chat/models/user_model.dart';
 import 'package:chat/modules/newchat_screen/newchat_screen.dart';
@@ -12,42 +13,55 @@ class friendRequestsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<appCubit,appStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
+    return Builder(
+      builder:(context) {
         appCubit.get(context).getRequests();
-       // appCubit.get(context).getallRequests();
-
-        return Scaffold(
-          appBar: AppBar(
-            title:Text('Friend requests') ,
-          ),
-         body:
-         appCubit.get(context).usersRequests.length>0?
-         Column(
-         children: [
+        return BlocConsumer<appCubit,appStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+         // appCubit.get(context).getallRequests();
+          return Scaffold(
+            appBar: AppBar(
+              title: Text( getTranslated(context, 'Friends requests')!,) ,
+            ),
+            body: appCubit.get(context).senderRequest.length>0?
+           Column(
+           children: [
                 Expanded(
-                child: ListView.separated(
-                  itemBuilder: (context, index) => friendRequestsBuilder(context, appCubit.get(context).usersRequests[index]),
-                  separatorBuilder:(context ,index)=>Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 85.0),
-                    child: Container(
-                      height: 1,
-                      width: double.infinity,
-                      color: Colors.grey[300],
+                  child: ListView.separated(
+                    itemBuilder: (context, index) => friendRequestsBuilder(context, appCubit.get(context).senderRequest[index]),
+                    separatorBuilder:(context ,index)=>Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 85.0),
+                      child: Container(
+                        height: 1,
+                        width: double.infinity,
+                        color: Colors.grey[300],
+                      ),
                     ),
+                    itemCount:appCubit.get(context).senderRequest.length,
+                    physics: BouncingScrollPhysics(),
                   ),
-                  itemCount:appCubit.get(context).usersRequests.length,
-                  physics: BouncingScrollPhysics(),
-                ),),
-         ],
-         ):Center(child: Column(
-             mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-               Text('No Friend Request',style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),),
-             ],
-           ),),
-        );
+               ),
+           ],
+         )
+          :Center(
+             child: Column(
+               mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+                 Text(
+                   getTranslated(context,'No_requests')!,
+                   style: Theme.of(context).textTheme.bodyText1,
+                   // TextStyle(
+                   //     fontSize: 20.0,
+                   //     fontWeight: FontWeight.bold,
+                   // ),
+                 ),
+               ],
+             ),
+           ),
+          );
+        },
+      );
       },
     );
   }
@@ -55,13 +69,15 @@ class friendRequestsScreen extends StatelessWidget {
 
 Widget friendRequestsBuilder(context,userModel model)=> Padding(
   padding: const EdgeInsets.all(10.0),
-  child:   Row(
+  child:Row(
     children: [
       CircleAvatar(
         radius: 45.0,
         backgroundImage: NetworkImage('${model.image}'),
       ),
-      SizedBox(width: 30.0,),
+      const SizedBox(
+        width: 30.0,
+      ),
       Expanded(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -74,8 +90,9 @@ Widget friendRequestsBuilder(context,userModel model)=> Padding(
               overflow: TextOverflow.ellipsis,
             ),
             //Text('${model.bio}',style: TextStyle(fontSize: 16.0,color: Colors.grey[600]),),
-            SizedBox(height: 10.0,),
-
+            const SizedBox(
+              height: 10.0,
+            ),
             Row(
               children: [
                 Container (
@@ -86,13 +103,16 @@ Widget friendRequestsBuilder(context,userModel model)=> Padding(
                   ),
                   child: MaterialButton(
                     onPressed: (){
-
-                      appCubit.get(context).acceptFriendRequest(friendId: model.uId);
+                      appCubit.get(context).acceptFriendRequest(model: model);
                     },
-                    child: Text('Accept',style: TextStyle(color: Colors.white),),
+                    child: Text(
+                      getTranslated(context,'Accept')!,
+                      style: TextStyle(color: Colors.white),),
                   ),
                 ),
-                SizedBox(width: 10.0,),
+                const SizedBox(
+                  width: 10.0,
+                ),
                 Container(
                   height: 40.0,
                   decoration: BoxDecoration(
@@ -101,9 +121,7 @@ Widget friendRequestsBuilder(context,userModel model)=> Padding(
                   ),
                   child: MaterialButton(
                     onPressed: (){
-                      appCubit.get(context).delRequests(senderId: model.uId);
-
-
+                      appCubit.get(context).delRequests(model: model);
                       /*
                       appCubit.get(context).usersRequests.forEach((element) {
                         print(element.uId);
@@ -114,7 +132,7 @@ Widget friendRequestsBuilder(context,userModel model)=> Padding(
                         print(element.sendrUid);
                       });*/
                     },
-                    child: Text('Delete'),
+                    child: Text(getTranslated(context,'Delete')!,),
                   ),
                 ),
               ],

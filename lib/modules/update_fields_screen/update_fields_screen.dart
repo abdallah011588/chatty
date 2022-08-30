@@ -1,5 +1,6 @@
 import 'package:chat/layout/cubit/cubit.dart';
 import 'package:chat/layout/cubit/states.dart';
+import 'package:chat/localization/localization_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,9 +11,7 @@ class updateFields extends StatelessWidget {
 
   final String title;
   final String field;
-
   updateFields({ required this.title,required this.field}) ;
-
 
   @override
   Widget build(BuildContext context) {
@@ -24,30 +23,33 @@ class updateFields extends StatelessWidget {
       builder:  (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(title),
+            title: Text(getTranslated(context,title)!),
             actions: [
               IconButton(
                 onPressed: (){
                 if(formKey.currentState!.validate())
                   {
-                    if(title=='User Name')
+                    if(getTranslated(context,title)! ==getTranslated(context,'User Name')!)
                     {
-                      appCubit.get(context).updateUser(name:controller.text );
+                      appCubit.get(context).updateUser(name:controller.text);
                       Navigator.pop(context);
                     }
-                    if(title=='Phone')
+                    if(getTranslated(context,title)! ==getTranslated(context,'Phone')!)
                     {
                       appCubit.get(context).updateUser(phone:controller.text );
                       Navigator.pop(context);
                     }
-                    if(title=='Bio')
+                    if(getTranslated(context,title)! ==getTranslated(context,'Bio')!)
                     {
                       appCubit.get(context).updateUser(bio:controller.text );
                       Navigator.pop(context);
                     }
                   }
                 },
-                icon: Icon(Icons.check,color: Colors.white,),),
+                icon: state is! appUpdateUserLoadingState?
+                Icon(Icons.check,color: Colors.white,)
+                :Center(child: CircularProgressIndicator(color: Colors.grey[200],)),
+              ),
             ],
           ),
           body: Padding(
@@ -56,11 +58,11 @@ class updateFields extends StatelessWidget {
               key: formKey,
               child: TextFormField(
                 controller: controller,
-                keyboardType: title=='Phone'?TextInputType.phone:TextInputType.text,
+                keyboardType: title==getTranslated(context,'Phone')! ? TextInputType.phone:TextInputType.text,
                 validator: (value){
                   if(value!.isEmpty)
                   {
-                    return 'can not be empty';
+                    return 'Can\'t be empty';
                   }
                   return null;
                 },

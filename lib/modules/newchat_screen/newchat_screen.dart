@@ -81,7 +81,6 @@ class newChatScreen extends StatelessWidget {
 }
 
 
-
 Widget addNewChatsBuilder(context,userModel model)=> InkWell(
   onTap: (){
    // Navigator.push(context, MaterialPageRoute(builder: (context) => messagesScreen(),));

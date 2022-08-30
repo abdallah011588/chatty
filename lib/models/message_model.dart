@@ -7,6 +7,7 @@ class messageModel
   late String dateTime;
   late String text;
   late String messageImage;
+  late String messageVoice;
 
 
 
@@ -17,7 +18,7 @@ class messageModel
     required this.dateTime,
     required this.text,
     required this.messageImage,
-
+    required this.messageVoice,
   });
 
 
@@ -28,6 +29,7 @@ class messageModel
     dateTime=json['dateTime'];
     text=json['text'];
     messageImage=json['messageImage'];
+    messageVoice=json['messageVoice'];
 
   }
 
@@ -40,6 +42,7 @@ class messageModel
       'dateTime':dateTime,
       'text':text,
       'messageImage':messageImage,
+      'messageVoice':messageVoice,
 
     };
   }
