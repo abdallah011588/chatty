@@ -106,11 +106,8 @@ class appAudioPlayerRestart extends appStates{}
 class appAudioPlayerReady extends appStates{}
 class appAudioPlayerProgress extends appStates{}
 
-
 class sendNotificationSuccessState extends appStates{}
 class sendNotificationErrorState extends appStates{}
-
-// my app states
 
 
 

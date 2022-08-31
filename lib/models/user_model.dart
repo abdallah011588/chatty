@@ -1,7 +1,6 @@
 
 class userModel
 {
-
   late String name;
   late String email;
   late String phone;
@@ -9,8 +8,6 @@ class userModel
   late String bio;
   late String image;
   late String messagingToken;
-  //late bool myFriend;
-
 
   userModel({
     required this.email,
@@ -20,7 +17,6 @@ class userModel
     required this.bio,
     required this.image,
     required this.messagingToken,
-   // required this.myFriend,
 
   });
 
@@ -34,10 +30,8 @@ class userModel
     bio=json['bio'];
     image=json['image'];
     messagingToken=json['messagingToken'];
-  //  myFriend=json['myFriend'];
 
   }
-
 
   Map<String,dynamic> toMap()
   {
@@ -49,8 +43,6 @@ class userModel
       'bio':bio,
       'image':image,
       'messagingToken':messagingToken,
-     // 'myFriend':myFriend,
-
     };
   }
 

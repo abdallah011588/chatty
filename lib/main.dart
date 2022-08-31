@@ -1,11 +1,7 @@
-import 'package:chat/layout/chat.dart';
 import 'package:chat/layout/cubit/cubit.dart';
 import 'package:chat/layout/cubit/states.dart';
 import 'package:chat/localization/localization_methods.dart';
 import 'package:chat/localization/set_localization.dart';
-import 'package:chat/modules/login_screen/login_screen.dart';
-import 'package:chat/modules/onboarding/onboarding_screen.dart';
-import 'package:chat/modules/setting_screen/setting_screen.dart';
 import 'package:chat/modules/splash_screen/splash_screen.dart';
 import 'package:chat/shared/constant/constants.dart';
 import 'package:chat/shared/local/cache.dart';
@@ -13,7 +9,6 @@ import 'package:chat/shared/remote/dio_tool.dart';
 import 'package:chat/shared/styles/themes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-//import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -152,7 +147,6 @@ class _MyAppState extends State<MyApp> {
               themeMode: appCubit.get(context).isdark?ThemeMode.dark: ThemeMode.light,
               debugShowCheckedModeBanner: false,
 
-
               locale: _local,
               supportedLocales: [
                 Locale('en', 'US'),
@@ -177,88 +171,10 @@ class _MyAppState extends State<MyApp> {
                 }
                 return supportedLocales.first;
               },
-
-
             );
           },
         ),
       );
-
     }
-
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 59:2C:8F:B4:8E:97:60:56:07:EB:64:3F:0C:3D:14:82:6B:CF:27:14
-
-
-/*
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-}
-
-*/

@@ -66,17 +66,11 @@ class updateFields extends StatelessWidget {
                   }
                   return null;
                 },
-                /*decoration: InputDecoration(
-                labelText: 'Bio',
-                //border: OutlineInputBorder(),
-               // prefixIcon: Icon(Icons.text_fields),
-              ),*/
               ),
             ),
           ),
         );
       },
-
     );
   }
 }

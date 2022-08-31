@@ -53,7 +53,6 @@ class messagesScreen extends StatelessWidget /* with WidgetsBindingObserver */
                         print('pop');
                         appCubit.get(context).audioPlayer.stop();
                         appCubit.get(context).recorder.closeRecorder();
-                       //messagecontroller.dispose();
                         Navigator.pop(context);
                       },
                       icon: Icon(Icons.arrow_back),
@@ -87,7 +86,6 @@ class messagesScreen extends StatelessWidget /* with WidgetsBindingObserver */
                             itemBuilder: (context, index)
                             {
                               var message=appCubit.get(context).messages[index];
-
                               if(appCubit.get(context).user_model!.uId==message.senderId)
                                 return senderMessageItem(context,message);
                               else
@@ -225,10 +223,6 @@ class messagesScreen extends StatelessWidget /* with WidgetsBindingObserver */
     );
   }
 }
-
-
-
-
 
 
 
@@ -375,10 +369,8 @@ Widget senderMessageItem(context ,messageModel message)
         ),
       ),
     ),
-
   );
 }
-
 
 Widget receiverMessageItem(context,messageModel message)
 {
@@ -513,6 +505,4 @@ Widget receiverMessageItem(context,messageModel message)
     ),
   );
 }
-
-//https://console.firebase.google.com/project/chat-8e284/storage/chat-8e284.appspot.com/files/~2Fvoices?hl=ar
 

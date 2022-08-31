@@ -1,9 +1,7 @@
 import 'package:chat/layout/cubit/cubit.dart';
 import 'package:chat/layout/cubit/states.dart';
 import 'package:chat/localization/localization_methods.dart';
-import 'package:chat/models/request_model.dart';
 import 'package:chat/models/user_model.dart';
-import 'package:chat/modules/newchat_screen/newchat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +17,6 @@ class friendRequestsScreen extends StatelessWidget {
         return BlocConsumer<appCubit,appStates>(
         listener: (context, state) {},
         builder: (context, state) {
-         // appCubit.get(context).getallRequests();
           return Scaffold(
             appBar: AppBar(
               title: Text( getTranslated(context, 'Friends requests')!,) ,
@@ -44,17 +41,13 @@ class friendRequestsScreen extends StatelessWidget {
                ),
            ],
          )
-          :Center(
+           :Center(
              child: Column(
                mainAxisAlignment: MainAxisAlignment.center,
                children: [
                  Text(
                    getTranslated(context,'No_requests')!,
                    style: Theme.of(context).textTheme.bodyText1,
-                   // TextStyle(
-                   //     fontSize: 20.0,
-                   //     fontWeight: FontWeight.bold,
-                   // ),
                  ),
                ],
              ),
@@ -89,7 +82,6 @@ Widget friendRequestsBuilder(context,userModel model)=> Padding(
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-            //Text('${model.bio}',style: TextStyle(fontSize: 16.0,color: Colors.grey[600]),),
             const SizedBox(
               height: 10.0,
             ),
@@ -122,15 +114,6 @@ Widget friendRequestsBuilder(context,userModel model)=> Padding(
                   child: MaterialButton(
                     onPressed: (){
                       appCubit.get(context).delRequests(model: model);
-                      /*
-                      appCubit.get(context).usersRequests.forEach((element) {
-                        print(element.uId);
-                      });
-
-
-                      appCubit.get(context).senderRequest.forEach((element) {
-                        print(element.sendrUid);
-                      });*/
                     },
                     child: Text(getTranslated(context,'Delete')!,),
                   ),
@@ -140,34 +123,6 @@ Widget friendRequestsBuilder(context,userModel model)=> Padding(
           ],
         ),
       ),
-
-      // Expanded(
-      //   child: Container (
-      //     height: 40.0,
-      //     decoration: BoxDecoration(
-      //       color: Colors.blue,
-      //       borderRadius: BorderRadius.circular(10.0),
-      //     ),
-      //       child: MaterialButton(
-      //         onPressed: (){},
-      //         child: Text('Accept',style: TextStyle(color: Colors.white),),
-      //       ),
-      //   ),
-      // ),
-      // SizedBox(width: 10.0,),
-      // Expanded(
-      //   child: Container(
-      //     height: 40.0,
-      //     decoration: BoxDecoration(
-      //       color: Colors.grey[400],
-      //       borderRadius: BorderRadius.circular(10.0),
-      //     ),
-      //     child: MaterialButton(
-      //       onPressed: (){},
-      //       child: Text('Delete'),
-      //     ),
-      //   ),
-      // ),
     ],
   ),
 );

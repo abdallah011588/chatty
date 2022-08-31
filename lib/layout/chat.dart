@@ -14,7 +14,6 @@ import 'package:chat/shared/constant/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
-
 import '../localization/localization_methods.dart';
 
 class chatLayout extends StatelessWidget {
@@ -26,10 +25,6 @@ class chatLayout extends StatelessWidget {
     return BlocConsumer<appCubit,appStates>(
       listener: (context, state) {},
       builder: (context, state) {
-
-        if(appCubit.get(context).user_model !=null) {
-          //appCubit.get(context).getFriends();
-        }
         var model=appCubit.get(context).user_model;
         return Scaffold(
           key: scaffoldKey,
@@ -55,8 +50,6 @@ class chatLayout extends StatelessWidget {
               IconButton(
                 onPressed: ()
                 {
-                 // appCubit.get(context).getSpecificUser();
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) => searchScreen(),));
                   showSearch(
                     context: context,
                     delegate: searchDelegate(list: appCubit.get(context).friends),
@@ -130,8 +123,6 @@ class chatLayout extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline3,
                   ),
                   onTap: () {
-                   // appCubit.get(context).getFriends();
-                    //appCubit.get(context).getAllFriends();
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) =>const friendsScreen(),),
@@ -165,7 +156,6 @@ class chatLayout extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline3,
                   ),
                   onTap: () {
-                   // appCubit.get(context).getVoiceRecorded();
                     Navigator.push(context, MaterialPageRoute(builder: (context) => voiceMessage(),));
                   },
                   iconColor: Colors.teal,
@@ -222,8 +212,6 @@ class chatLayout extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             onPressed: ()
             {
-             // Navigator.push(context, MaterialPageRoute(builder: (context) => newChatScreen(),));
-
               showSearch(context: context, delegate: newFriendSearchFDelegate(list: appCubit.get(context).users));
             },
             child:const Icon(Icons.person_add_alt_1),
@@ -234,7 +222,6 @@ class chatLayout extends StatelessWidget {
     );
   }
 }
-
 
 
 
@@ -250,7 +237,6 @@ Widget chatsItemBuilder(context,userModel model)=>InkWell(
         CircleAvatar(
           radius: 30.0,
           backgroundImage:  NetworkImage(model.image),
-          //NetworkImage('https://img.freepik.com/free-photo/hacker-with-mask_103577-1.jpg?size=626&ext=jpg&ga=GA1.2.1571019282.1647278978'),
         ),
         const SizedBox(width: 10.0,),
         Expanded(
@@ -262,32 +248,13 @@ Widget chatsItemBuilder(context,userModel model)=>InkWell(
                 children: [
                   Expanded(
                     child: Text( model.name,
-                      style: Theme.of(context).textTheme.headline1,//TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.headline1,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                     ),
                   ),
-                 // Spacer(),
-                 /* Text(
-
-                     // appCubit.get(context).getMessages(receiverId: );
-                     appCubit.get(context).messages.length-1 >0?
-                    //  '${DateFormat.yMMMd().format(appCubit.get(context).messages[ appCubit.get(context).messages.length-1].dateTime as DateTime)}'
-                     '${appCubit.get(context).messages[ appCubit.get(context).messages.length-1].dateTime}'
-                         : '',
-                    //'12:15 AM',
-                    style: Theme.of(context).textTheme.headline2,//TextStyle(color: Colors.grey[600]),
-                  ),*/
                 ],
               ),
-             /* const  SizedBox(height: 10.0,),
-              Text(
-                appCubit.get(context).messages.length-1 >0?
-                '${appCubit.get(context).messages[ appCubit.get(context).messages.length-1].text}'
-                :'',
-                //'Hello bro ,How are you ?',
-                style: Theme.of(context).textTheme.headline2,//TextStyle(color: Colors.grey[600]),
-              ),*/
             ],
           ),
         ),

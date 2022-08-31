@@ -121,7 +121,6 @@ class _onboardingScreenState extends State<onboardingScreen> {
                     spacing: 10,
                   ),
                 ),
-              //  Spacer(),
                 FloatingActionButton(
                   onPressed: () {
                     if (islast) {

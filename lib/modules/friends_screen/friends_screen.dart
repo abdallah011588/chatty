@@ -62,80 +62,6 @@ class friendsScreen extends StatelessWidget {
   }
 }
 
-/*
-Widget friendRequestsBuilder(context,userModel model)=> Padding(
-  padding: const EdgeInsets.all(10.0),
-  child:   Row(
-    children: [
-      CircleAvatar(
-        radius: 45.0,
-        backgroundImage: NetworkImage('${model.image}'),
-      ),
-      SizedBox(width: 30.0,),
-      Expanded(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '${model.name}',
-              style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            //Text('${model.bio}',style: TextStyle(fontSize: 16.0,color: Colors.grey[600]),),
-            SizedBox(height: 10.0,),
-
-            Row(
-              children: [
-                Container (
-                  height: 40.0,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: MaterialButton(
-                    onPressed: (){
-
-                      appCubit.get(context).acceptFriendRequest(friendId: model.uId);
-                    },
-                    child: Text('Accept',style: TextStyle(color: Colors.white),),
-                  ),
-                ),
-                SizedBox(width: 10.0,),
-                Container(
-                  height: 40.0,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[400],
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: MaterialButton(
-                    onPressed: (){
-                      appCubit.get(context).delRequests(senderId: model.uId);
-
-
-                      /*
-                      appCubit.get(context).usersRequests.forEach((element) {
-                        print(element.uId);
-                      });
-
-
-                      appCubit.get(context).senderRequest.forEach((element) {
-                        print(element.sendrUid);
-                      });*/
-                    },
-                    child: Text('Delete'),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    ],
-  ),
-);
-*/
 
 Widget chatsItemBuilder(context,userModel model)=>InkWell(
   onTap: (){
@@ -147,7 +73,7 @@ Widget chatsItemBuilder(context,userModel model)=>InkWell(
       children: [
         CircleAvatar(
           radius: 35.0,
-          backgroundImage:  NetworkImage('${model.image}'),//NetworkImage('https://img.freepik.com/free-photo/hacker-with-mask_103577-1.jpg?size=626&ext=jpg&ga=GA1.2.1571019282.1647278978'),
+          backgroundImage:  NetworkImage('${model.image}'),
         ),
         const SizedBox(
           width: 10.0,
@@ -162,7 +88,7 @@ Widget chatsItemBuilder(context,userModel model)=>InkWell(
                   Expanded(
                     child: Text(
                       '${model.name}'
-                      ,style: Theme.of(context).textTheme.headline3,//TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold),
+                      ,style: Theme.of(context).textTheme.headline3,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),

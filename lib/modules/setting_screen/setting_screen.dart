@@ -21,8 +21,6 @@ class settingScreen extends StatelessWidget
   var phoneController=TextEditingController();
   var bioController=TextEditingController();
 
-
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<appCubit,appStates>(
@@ -30,11 +28,9 @@ class settingScreen extends StatelessWidget
       builder: (context, state) {
 
         var usermodel=appCubit.get(context).user_model;
-
         nameController.text=usermodel!.name;
         phoneController.text=usermodel.phone;
         bioController.text=usermodel.bio;
-
         return Scaffold(
 
           appBar: AppBar(
@@ -338,11 +334,6 @@ class settingScreen extends StatelessWidget
               ],
             ),
           ),
-
-
-
-
-
         );
       },
     );
@@ -354,135 +345,3 @@ void _changeLanguage(Language lang ,context) async
   Locale _temp = await setLocale(lang.languageCode);
   MyApp.setLocale( context, _temp);
 }
-
-
-
-/*
-
-
-/*
-Future<void> _showMyDialog() async {
-  return showDialog<void>(
-    context: context,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('AlertDialog Title'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: const <Widget>[
-              Text('This is a demo alert dialog.'),
-              Text('Would you like to approve of this message?'),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Approve'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-*/
-
-/*
-                      SizedBox(height: 10.0,),
-                      Row(
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                       // mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: namecontroller,
-                              keyboardType: TextInputType.name,
-                              validator: (value){
-                                if(value!.isEmpty)
-                                {
-                                  return 'can not be empty';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'Name',
-                                border: OutlineInputBorder(),
-                                prefixIcon: Icon(Icons.person),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 5.0,),
-                          TextButton(onPressed: (){}, child: Text('update'))
-                        ],
-                      ),
-                      SizedBox(height: 10.0,),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                           Expanded(
-                             child: TextFormField(
-                               controller: phonecontroller,
-                               keyboardType: TextInputType.phone,
-                               validator: (value){
-                                 if(value!.isEmpty)
-                                 {
-                                   return 'can not be empty';
-                                 }
-                                 return null;
-                               },
-                               decoration: InputDecoration(
-                                 labelText: 'Phone',
-                                 border: OutlineInputBorder(),
-                                 prefixIcon: Icon(Icons.phone),
-                               ),
-                             ),
-                           ),
-                          SizedBox(width: 5.0,),
-                          TextButton(onPressed: (){}, child: Text('update'))
-                        ],
-                      ),
-                      SizedBox(height: 10.0,),
-                      Row(
-                        //mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: biocontroller,
-                              keyboardType: TextInputType.text,
-                              validator: (value){
-                                if(value!.isEmpty)
-                                {
-                                  return 'can not be empty';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'Bio',
-                                border: OutlineInputBorder(),
-                                prefixIcon: Icon(Icons.text_fields),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 5.0,),
-                         TextButton(onPressed: (){
-
-                           Navigator.push(context, MaterialPageRoute(builder: (context) => updateFields(),));
-                         }, child: Text('update')),
-                        ],
-                      ),
-                      */
-
-/*ListView( children: [
-                      ListTile(
-                          onTap: (){},
-                        title: Text('Account',style:TextStyle(fontWeight: FontWeight.bold,fontSize: 16,color: Colors.blue)),
-                      ),
-                    ],
-                  ) ,*/
-
-*/
-

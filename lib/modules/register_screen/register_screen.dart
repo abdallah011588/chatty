@@ -27,11 +27,6 @@ class register_screen extends StatelessWidget{
       create: (context) => registerCubit(),
       child: BlocConsumer<registerCubit,registerStates>(
         listener: (context, state) {
-        // if(state is createUserSuccessState)
-        // {
-        //   Navigator.push(context, MaterialPageRoute(builder: (context) => loginScreen(),));
-        // }
-
         if(state is createUserSuccessState){
           uId=state.uId;
           cache.setData( key: 'uId', value: state.uId ).then((value) {
@@ -74,7 +69,6 @@ class register_screen extends StatelessWidget{
             toastLength: Toast.LENGTH_LONG,
           );
         }
-
         } ,
         builder: (context, state) {
           return Scaffold(

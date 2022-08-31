@@ -80,7 +80,6 @@ class newChatScreen extends StatelessWidget {
   }
 }
 
-
 Widget addNewChatsBuilder(context,userModel model)=> InkWell(
   onTap: (){
    // Navigator.push(context, MaterialPageRoute(builder: (context) => messagesScreen(),));
@@ -101,17 +100,16 @@ Widget addNewChatsBuilder(context,userModel model)=> InkWell(
             children: [
               Text(
                 '${model.name}',
-                style:  Theme.of(context).textTheme.headline1,//TextStyle(fontSize: 16.0,fontWeight: FontWeight.bold,),
+                style:  Theme.of(context).textTheme.headline1,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
               ),
               SizedBox(height: 10.0,),
               Text(
                 '${model.bio}',
-                style:Theme.of(context).textTheme.headline2,// TextStyle(fontSize: 16.0,color: Colors.grey[600],overflow: TextOverflow.ellipsis),
+                style:Theme.of(context).textTheme.headline2,
               ),
             ],
-
           ),
         ),
         IconButton(
@@ -123,13 +121,6 @@ Widget addNewChatsBuilder(context,userModel model)=> InkWell(
             color: appCubit.get(context).isdark?Colors.white:Colors.black,
           ),
         ),
-
-        /*appCubit.get(context).requested? IconButton(
-          onPressed: (){
-           // appCubit.get(context).sendFriendRequest(receiverId: model.uId);
-          },
-          icon: Icon(Icons.check,color: Colors.blue,),
-        ): */
       ],
     ),
   ),

@@ -5,9 +5,6 @@ abstract class loginStates{}
 class initialLoginState extends loginStates{}
 class loginShowPasswordState extends loginStates{}
 
-
-
-
 class loginLoadingState extends loginStates{}
 class loginSuccessState extends loginStates{
 
@@ -22,15 +19,6 @@ class loginErrorState extends loginStates{
   loginErrorState(this.error);
 
 }
-
-
-/*
-
-class GetUserLoadingState extends loginStates{}
-class GetUserSuccessState extends loginStates{}
-class GetUserErrorState extends loginStates{}
-
-*/
 
 
 

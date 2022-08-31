@@ -10,8 +10,6 @@ class searchScreen extends StatelessWidget {
 
   var controller=TextEditingController();
 
-  //const searchScreen({Key? key}) : super(key: key);
-
   userModel? model;
   @override
   Widget build(BuildContext context) {
@@ -24,8 +22,7 @@ class searchScreen extends StatelessWidget {
           body: SingleChildScrollView(
             child: Column(
               children: [
-
-                Row(
+             Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Expanded(
@@ -49,8 +46,6 @@ class searchScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                   // SizedBox(width: 5.0,),
-
                     Padding(
                       padding: const EdgeInsetsDirectional.only(top: 8.0,bottom:  8.0,end:  8.0),
                       child: Container(
@@ -63,18 +58,7 @@ class searchScreen extends StatelessWidget {
                           onPressed: ()
                           {
                             /// NEW ///////
-
                             appCubit.get(context).getSpecificUser(name: controller.text);
-
-                           // appCubit.get(context).getSearchedFriend(name: controller.text);
-                          //  model=appCubit.get(context).getSearchedFriendList[0];
-                           /* appCubit.get(context).users.forEach((element) {
-                                  if(element.email==searchController.text)
-                                    {
-                                      searchedUser=element;
-                                      print(searchedUser!.email);
-                                    }
-                                });*/
                           },
                           icon: Icon(Icons.search),
                         ),
@@ -82,10 +66,6 @@ class searchScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-
-              //  if(model !=null)
-               // if(appCubit.get(context).searchedFriend !=null)
-
              if(appCubit.get(context).specificUser.length>0)
              ListView.separated(
               shrinkWrap: true,
@@ -101,22 +81,6 @@ class searchScreen extends StatelessWidget {
              itemCount: appCubit.get(context).specificUser.length,
             ),
 
-                // chatsItemBuilder(context, appCubit.get(context).searchedFriend!),
-                /* Expanded(
-                  child: ListView.separated(
-                    itemBuilder: (context, index) => chatsItemBuilder(context,appCubit.get(context).searchedFriend!),
-                    separatorBuilder:(context ,index)=>Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 85.0),
-                      child: Container(
-                        height: 1,
-                        width: double.infinity,
-                        color: Colors.grey[300],
-                      ),
-                    ),
-                    itemCount: appCubit.get(context).usersFriends.length,
-                    physics: BouncingScrollPhysics(),
-                  ),
-                ),*/
               ],
             ),
           ),
@@ -167,7 +131,10 @@ class searchDelegate extends  SearchDelegate<String>
          itemBuilder: (context, index) {
            return InkWell(
              onTap: (){
-               Navigator.push(context, MaterialPageRoute(builder: (context) => messagesScreen(usermodel: resultList[index]),));
+               Navigator.push(
+                   context,
+                   MaterialPageRoute(builder: (context) => messagesScreen(usermodel: resultList[index]),),
+               );
              },
              child: Padding(
                padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -327,55 +294,9 @@ class newFriendSearchFDelegate extends  SearchDelegate<String>
                 ),
               ),
               trailing:appCubit.get(context).searchCheck(resultList[index]),
-
-             /* Builder(
-                builder: (context) {
-                  //Widget? icon;
-                  // appCubit.get(context).friends.forEach((element) {
-                  //   if(element.email==resultList[index].email)
-                  //   {
-                  //     icon=Icon(
-                  //       Icons.person,
-                  //       color: Colors.blue,
-                  //     );
-                  //   }
-                  //   else
-                  //   {
-                  //     icon=IconButton(
-                  //       onPressed: (){
-                  //         appCubit.get(context).sendFriendRequest(receiverId: resultList[index].uId);
-                  //       },
-                  //       icon: Icon(
-                  //         Icons.person_add,
-                  //         color: appCubit.get(context).isdark?Colors.white:Colors.black,
-                  //       ),
-                  //     );
-                  //   }
-                  // });
-                  if( appCubit.get(context).friends.contains(resultList[index])) {
-                    return Icon(
-                      Icons.person,
-                      color: Colors.blue,
-                    );
-                  }
-                  else
-                  {
-                    return IconButton(
-                  onPressed: (){
-                  appCubit. get (context).sendFriendRequest(receiverId: resultList[index].uId);
-                  },
-                  icon: Icon(
-                  Icons.person_add,
-                  color: appCubit. get (context).isdark?Colors.white:Colors.black,
-                  ),
-                  );
-                }
-                },
-              ),*/
             ),
           );
         },
-
         separatorBuilder:(context, index)=> Padding(
           padding: const EdgeInsetsDirectional.only(start: 40.0,),
           child: Container(
@@ -422,44 +343,6 @@ class newFriendSearchFDelegate extends  SearchDelegate<String>
               ),
             ),
             trailing:appCubit.get(context).searchCheck(searchList[index]),
-            /* Builder(
-              builder: (context) {
-                Widget? icon;
-                appCubit.get(context).friends.forEach((element) {
-                  if(element.email==searchList[index].email)
-                    {
-                      icon= Icon(
-                        Icons.person,
-                        color: Colors.blue,
-                      );
-                    }
-                });
-                if(icon==null)
-                 {
-                    searchList[index].uId==appCubit.get(context).user_model!.uId?
-                    icon=MaterialButton(
-                      onPressed: (){},
-                      height: 10,
-                      child: Text('You'),
-                    ):
-                    icon=IconButton(
-                      onPressed: (){
-                        appCubit.get(context).sendFriendRequest(receiverId: searchList[index].uId);
-                        appCubit.get(context).sendNotification(
-                            receiver: searchList[index].messagingToken,
-                            title: 'Friend request',
-                            body: '${searchList[index].name} sent you a request',
-                        );
-                      },
-                      icon: Icon(
-                        Icons.person_add,
-                        color: appCubit.get(context).isdark?Colors.white:Colors.black,
-                      ),
-                    );
-                  }
-                return icon!;
-              },
-            ),*/
           ),
         ),
         separatorBuilder:(context, index)=> Padding(
@@ -471,21 +354,9 @@ class newFriendSearchFDelegate extends  SearchDelegate<String>
           ),
         ),
         itemCount: searchList.length,
-
       ),
     );
   }
-
-
-
-
-
-
-
-
-
-
-
 
   @override
   ThemeData appBarTheme(BuildContext context) {

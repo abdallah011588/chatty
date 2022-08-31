@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class editImageScreen extends StatelessWidget {
 
-
   final File image;
   final userModel model;
 
@@ -16,7 +15,6 @@ class editImageScreen extends StatelessWidget {
     required this.image,
     required this.model
   }) ;
-
 
 
   @override
@@ -45,9 +43,6 @@ class editImageScreen extends StatelessWidget {
           body: SizedBox.expand(
             child: Column(
               children: [
-                // if(state is appUploadMessageImLoadingState)
-                //   LinearProgressIndicator(),
-
                 Expanded(
                   child: InteractiveViewer(
                     child: Image(image: FileImage(image),),//Image.file(imageUri),
@@ -76,8 +71,3 @@ class editImageScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-//Skipped 1757 frames!  The application may be doing too much work on its main thread.
-//Background concurrent copying GC freed 726798(32MB) AllocSpace objects, 0(0B) LOS objects, 49% free, 20MB/41MB, paused 302us total 210.379ms

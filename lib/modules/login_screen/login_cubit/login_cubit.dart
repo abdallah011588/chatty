@@ -37,24 +37,4 @@ class loginCubit extends Cubit<loginStates>{
        });
   }
 
-
-/*
-  late userModel user_model;
-
-  void getUserData( {required String uid})
-  {
-    emit(GetUserLoadingState());
-    FirebaseFirestore.instance.collection('users')
-        .doc(uid)
-        .get().then((value) {
-      user_model=userModel.fromJson(value.data()!);
-      // print(value.data());
-      //print(user_model.name);
-      emit(GetUserSuccessState());
-    }).catchError((error){
-      emit(GetUserErrorState());
-    });
-  }
-*/
-
 }

@@ -31,16 +31,16 @@ class _splashScreenState extends State<splashScreen> {
   Timer? timer;
   void goTo()
   {
-     timer= Timer(const Duration(seconds: 6), (){
-      Navigator.push(
+     timer= Timer(const Duration(seconds: 5), (){
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) => widget.onBoarding? widget.isLogin? chatLayout():loginScreen(): const onboardingScreen(),
         ),
+       (route) => false
       );
-    });
+     });
   }
-
 
   @override
   void initState() {
@@ -104,6 +104,5 @@ class _splashScreenState extends State<splashScreen> {
       ),
     );
   }
-
 
 }
